@@ -1,26 +1,33 @@
-import Link from 'next/link';
-
 export default function Home() {
   return (
-    <div className="z-10 max-w-md w-full items-center justify-center font-mono text-sm flex flex-col gap-6 bg-white p-8 rounded-xl shadow-lg">
-      <h1 className="text-3xl font-bold text-gray-800">Welcome</h1>
-      <p className="text-gray-600 text-center">Please sign in to continue</p>
-      
-      <div className="flex flex-col gap-3 w-full">
-        <a 
-          href="http://127.0.0.1:9000/auth/github/login" 
-          className="flex items-center justify-center gap-2 bg-[#24292e] text-white px-6 py-3 rounded-lg hover:opacity-90 transition font-medium"
-        >
-          <span>Login with GitHub</span>
-        </a>
-        
-        <a 
-          href="http://127.0.0.1:9000/auth/google/login" 
-          className="flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 transition font-medium"
-        >
-          <span>Login with Google</span>
-        </a>
+    <section className="w-full max-w-md">
+      <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-xl">
+        <div className="mb-6 text-center">
+          <p className="text-sm font-semibold tracking-wide text-slate-500">GO AUTH</p>
+          <h1 className="mt-2 text-3xl font-bold text-slate-900">Welcome back</h1>
+          <p className="mt-2 text-sm text-slate-600">Sign in to continue to your dashboard</p>
+        </div>
+
+        <div className="space-y-3">
+          <a
+            href="http://127.0.0.1:9000/auth/github/login"
+            className="flex w-full items-center justify-center rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+          >
+            Continue with GitHub
+          </a>
+
+          <a
+            href="http://127.0.0.1:9000/auth/google/login"
+            className="flex w-full items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          >
+            Continue with Google
+          </a>
+        </div>
+
+        <p className="mt-6 text-center text-xs text-slate-500">
+          By continuing, you agree to secure sign-in using OAuth and JWT.
+        </p>
       </div>
-    </div>
+    </section>
   );
 }

@@ -16,9 +16,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-24">
+      <body className={`${inter.className} antialiased`}>
+        <main className="min-h-screen bg-slate-100 p-6 sm:p-10">
+          <div className="mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-6xl items-center justify-center">
             {children}
+          </div>
         </main>
       </body>
     </html>

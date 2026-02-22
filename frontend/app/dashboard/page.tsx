@@ -3,8 +3,14 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+type MeResponse = {
+  user_id: string;
+  email: string;
+  message: string;
+};
+
 export default function Dashboard() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<MeResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -44,37 +50,52 @@ export default function Dashboard() {
     });
   };
 
-  if (loading) return <div className="text-xl">Loading...</div>;
+  if (loading) {
+    return (
+      <section className="w-full max-w-3xl">
+        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-xl">
+          <p className="text-sm text-slate-500">Loading your dashboard...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
-        <button 
+    <section className="w-full max-w-3xl">
+      <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-xl">
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <p className="text-sm font-semibold tracking-wide text-slate-500">GO AUTH</p>
+            <h1 className="mt-1 text-3xl font-bold text-slate-900">Dashboard</h1>
+          </div>
+          <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-        >
+            className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+          >
             Logout
-        </button>
-      </div>
-      
-      <div className="space-y-4">
-        <div className="p-4 bg-green-50 rounded border border-green-200">
-            <h2 className="text-xl font-semibold text-green-800 mb-2">Welcome Back!</h2>
-            <p className="text-green-700">You have successfully logged in.</p>
+          </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-            <div className="p-4 bg-gray-50 rounded border">
-                <p className="text-sm text-gray-500 font-semibold uppercase">ID</p>
-                <p className="font-mono text-gray-800">{user?.user_id}</p>
-            </div>
-            <div className="p-4 bg-gray-50 rounded border">
-                <p className="text-sm text-gray-500 font-semibold uppercase">Email</p>
-                <p className="font-mono text-gray-800">{user?.email}</p>
-            </div>
+        <div className="mb-6 rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+          <h2 className="text-lg font-semibold text-emerald-800">Welcome back</h2>
+          <p className="mt-1 text-sm text-emerald-700">You are signed in successfully.</p>
         </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">User ID</p>
+            <p className="mt-2 break-all font-mono text-sm text-slate-800">{user?.user_id}</p>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Email</p>
+            <p className="mt-2 break-all font-mono text-sm text-slate-800">{user?.email}</p>
+          </div>
+        </div>
+
+        <p className="mt-6 text-xs text-slate-500">
+          Session is secured with OAuth and JWT in an HttpOnly cookie.
+        </p>
       </div>
-    </div>
+    </section>
   );
 }
