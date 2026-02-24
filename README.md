@@ -49,7 +49,14 @@ CREATE DATABASE gocodetest;
    go mod tidy
    ```
 
-3. Create a `.env` file in the `backend/` directory with the following variables:
+3. Configure Environment Variables:
+   
+   Copy the example environment file:
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Or manually create a `.env` file with the following keys:
    ```env
    PORT=9000
    
