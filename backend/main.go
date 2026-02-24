@@ -39,6 +39,13 @@ func main() {
 	r.POST("/login", controllers.Login)
 	r.GET("/auth/github", controllers.GitHubLogin)
 	r.GET("/auth/github/callback", controllers.GitHubCallback)
+	// Add support for legacy/alternative endpoints if needed, or just standardise
+	r.GET("/auth/github/login", controllers.GitHubLogin) 
+	
+	r.GET("/auth/google", controllers.GoogleLogin)
+	r.GET("/auth/google/callback", controllers.GoogleCallback)
+	r.GET("/auth/google/login", controllers.GoogleLogin)
+
 
 	port := os.Getenv("PORT")
 	if port == "" {
