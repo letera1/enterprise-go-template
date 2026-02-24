@@ -46,9 +46,11 @@ var googleOauthConfig = &oauth2.Config{
 func InitOAuth() {
 	githubOauthConfig.ClientID = os.Getenv("GITHUB_CLIENT_ID")
 	githubOauthConfig.ClientSecret = os.Getenv("GITHUB_CLIENT_SECRET")
+	githubOauthConfig.RedirectURL = os.Getenv("GITHUB_REDIRECT_URL")
 
 	googleOauthConfig.ClientID = os.Getenv("GOOGLE_CLIENT_ID")
 	googleOauthConfig.ClientSecret = os.Getenv("GOOGLE_CLIENT_SECRET")
+	googleOauthConfig.RedirectURL = os.Getenv("GOOGLE_REDIRECT_URL")
 }
 
 // Signup
