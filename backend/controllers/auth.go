@@ -21,7 +21,7 @@ import (
 var jwtKey = []byte(os.Getenv("JWT_SECRET"))
 
 type Claims struct {
-	UserID uint `json:"user_id"`
+	UserID uint   `json:"user_id"`
 	Email  string `json:"email"`
 	jwt.RegisteredClaims
 }
@@ -170,8 +170,8 @@ func GitHubCallback(c *gin.Context) {
 	}
 
 	// Redirect to frontend with token
-	// Assuming frontend is at localhost:3000
-	c.Redirect(http.StatusTemporaryRedirect, fmt.Sprintf("http://localhost:3000/login?token=%s", jwtToken))
+	// Assuming frontend is at localhost:3050
+	c.Redirect(http.StatusTemporaryRedirect, fmt.Sprintf("http://localhost:3050/login?token=%s", jwtToken))
 }
 
 func generateToken(user models.User) (string, error) {

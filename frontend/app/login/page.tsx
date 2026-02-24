@@ -1,21 +1,31 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function LoginPage() {
+// Separate component to use useSearchParams inside Suspense
+function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const token = searchParams.get("token");
+    if (token) {
+      localStorage.setItem("token", token);
+      router.push("/dashboard");
+    }
+  }, [searchParams, router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
     try {
-      const res = await fetch("http://localhost:8080/login", {
+      const res = await fetch("http://localhost:9000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -27,10 +37,7 @@ export default function LoginPage() {
         throw new Error(data.error || "Login failed");
       }
 
-      // Store token (in a real app, consider HTTP-only cookies set by backend)
-      // Since backend returns token in JSON for manual handling:
       localStorage.setItem("token", data.token);
-      
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.message);
@@ -38,8 +45,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+    <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
         <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Login</h2>
         
         {error && (
@@ -83,7 +89,7 @@ export default function LoginPage() {
         </div>
 
         <button
-          onClick={() => window.location.href = "http://localhost:8080/auth/github"}
+          onClick={() => window.location.href = "http://localhost:9000/auth/github"}
           className="flex items-center justify-center w-full py-2 mb-4 font-bold text-white bg-gray-800 rounded-lg hover:bg-gray-900 transition"
         >
           <svg className="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
@@ -99,6 +105,15 @@ export default function LoginPage() {
           </Link>
         </p>
       </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <Suspense fallback={<div>Loading...</div>}>
+        <LoginForm />
+      </Suspense>
     </div>
   );
 }
